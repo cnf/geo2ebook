@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>(${name}) ${altname} by ${placed_by}</title>
+</head>
+
+<body>
+  <h1 name="${name}.html#${name}"><img src="img/types/${type}.gif" />${name}</h1>
+  <h2>${altname}</h2>
+  <ul>
+    <li>Placed by <b>${placed_by}</b> on <b>${placed_at}</b></li>
+    <li>Coordinates: <b>
+% if lat.split('.')[0] < 0:
+  S
+% else:
+  N
+%endif
+${lat.split('.')[0]}&deg; ${float('0.'+lat.split('.')[1])*60}
+&nbsp;-&nbsp;
+% if lon.split('.')[0] < 0:
+  W
+% else:
+  E
+%endif
+${lon.split('.')[0]}&deg; ${float('0.'+lon.split('.')[1])*60}</b></li>
+
+    <li>Size: <img src="img/containers/${container}.gif" /></li>
+    <li>Difficulty: <img src="img/stars/stars${difficulty}.gif" /></li>
+    <li>Terrain: <img src="img/stars/stars${terrain}.gif" /></li>
+% if short_description :
+    <li><b>Short Description</b>: <div style="display: inline;">${short_description}</div></li>
+% endif
+% if encoded_hints:
+    <li><b>Hints</b>: <div style="display: inline;">${encoded_hints}</div></li>
+% endif
+% if logs:
+<li><a name="${name}.html#${name}description" href="${name}.html#${name}logs">Recent Finds</a></li>
+% endif
+% if long_description:
+      <li><b>Description</b>:</li>
+% endif
+</ul>
+% if long_description:
+      ${long_description}
+% endif
+
+% if logs:
+    <h4 id="${name}logs" name="${name}logs">Logs (<a href="${name}.html#${name}">Back to Cache</a>)</h4>
+    <ul>
+    % for log in logs:
+        <li><b>${log['type']}</b>
+            on <b>${log['date']}</b>
+            by <b>${log['finder']}</b> 
+            :<br />${log['text']}</li>
+    % endfor
+    </ul>
+% endif
+
+
+</body>
+</html>
